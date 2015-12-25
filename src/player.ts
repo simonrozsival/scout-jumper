@@ -143,7 +143,7 @@ export default class Player {
 	protected jump = () => {
 		this.sprite.animations.play("jump");
 		this.sprite.body.velocity.y = -720;
-		this.sprite.body.velocity.x = 50;
+		this.sprite.body.velocity.x = 30;
 		this.isInAir = true;
 		this.hopSound.play();
 	};
