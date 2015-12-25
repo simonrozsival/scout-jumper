@@ -1,0 +1,21 @@
+{
+	"query": {
+		"nested": {
+			"path": "units",
+			"query": {
+				"filtered": {
+					"query": {
+						"bool": {
+							"must": {
+								"term": {
+									"unitType": "Základní škola"
+								}
+							},
+							"should": []
+						}
+					}
+				}
+			}
+		}
+	}
+}

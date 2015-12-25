@@ -1,0 +1,102 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ulož si své skóre!</title>
+	<link rel="stylesheet" media="screen" href="assets/style.css">
+	<meta property="og:url"                content="http://ples.wakan.cz/skautohra/" />
+	<meta property="og:title"              content="Blíží se šumperský skautský ples 2016"/>
+	<meta property="og:description"        content="Pro zkrácení dlouhých zimních večerů a čekání na skautský ples jsem pro Tebe připravili krátkou hru, díky které navíc můžete vyhrát drobnou cenu pro zpříjemnění šumperské skautského plesu 2016." />
+	<meta property="og:image"              content="http://ples.wakan.cz/skautohra/assets/skautora.png" />
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=155631214526282";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<!--
+		Ahoj, zdravím tě a zároveň tě prosím, abyys tuto hru nehackoval.. určitě brzy najdeš způsob, jak do databáze
+		vložit libovolné skóre a zvítězit tak. Nekaž prosím ostatním hru a hrej fair ;-) Šimon R.
+		-->
+	<h1><img src="assets/best-score.png" alt="Nejlepší hráči"></h1>
+	<p class="about">Tady je seznam nejlepších hráčů. Ten, který se udrží na prvním místě získá od nás kromě nehynoucí slávy také porci guláše a kofolu nebo pivo na ples!</p>
+	
+	<ol class="highscore" id="best">
+		Načítám tabulku výsledků...
+	</ol>
+	
+	<p><a href="http://ples.wakan.cz"><img src="assets/buy.png" alt="Koupit lístek na ples"></a></p>
+	<hr>
+	<p><a href="http://www.facebook.com/sharer/sharer.php?u=http://ples.wakan.cz/skautohra/&title=Ve SkautoHře jsem získal(a) 100 bodů"><img src="assets/fbshare.png" alt="Sdílet hru na Facebooku"></a></p>
+	<hr>
+	<p><a href="game.html"><img src="assets/play.png" alt="Hrát znovu"></a></p>
+	
+	<ol class="highscore" id="other">
+		Načítám tabulku výsledků...
+	</ol>
+	
+	<p class="about"><img src="assets/credits.png" alt="Vytvořili Šimon a Štěpán Rozsívalovi"></p>
+		
+	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	<script>
+	var firebaseRef = new Firebase("https://skautsky-ples.firebaseio.com/game/highscore");
+	window.onload = function() {
+		var best = document.getElementById("best");
+		var other = document.getElementById("other");
+		var usersId = getParameterByName("id") || 0;
+		firebaseRef.orderByChild("score").once("value", function(data) {
+			var stack = [];
+			for (var item in data.val()) {
+				var itemData = data.val()[item];
+				itemData.id = item; 
+				stack.push(itemData);
+			}
+			stack.sort(function(a, b) {
+				return b.score - a.score;
+			});
+			
+			best.innerHTML = "";
+			for (var id in stack.slice(0, 10)) {
+					var result = stack[id].name + ": " + stack[id].score; 
+					var li = document.createElement("li");
+					if (stack[id].id == usersId) {
+						li.innerHTML = "<b>" + result + "</b>";
+					} else {
+						li.innerHTML = result;
+					}
+					best.appendChild(li);
+			}
+			
+			other.innerHTML = "";
+			if (stack.length > 10) {
+				other.setAttribute("start", 11);
+				stack.splice(0, 10);
+				for (var id in stack) {
+						var result = stack[id].name + ": " + stack[id].score; 
+						var li = document.createElement("li");
+						if (stack[id].id == usersId) {
+							li.innerHTML = "<b>" + result + "</b>";
+						} else {
+							li.innerHTML = result;
+						}
+						other.appendChild(li);
+				}
+			}
+		}, function(err) {
+			alert("Nastala chyba při stahování dat - zkontrolujte své připojení k internetu.");
+		});
+	};
+	
+	function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+		var results = regex.exec(window.location.search);
+    return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	</script>
+</body>
+</html>

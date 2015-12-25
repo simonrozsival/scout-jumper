@@ -1,0 +1,87 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ulož si své skóre!</title>
+	<link rel="stylesheet" media="screen" href="assets/style.css">
+</head>
+<body>
+	<!--
+		Ahoj, zdravím tě a zároveň tě prosím, abyys tuto hru nehackoval.. určitě brzy najdeš způsob, jak do databáze
+		vložit libovolné skóre a zvítězit tak. Nekaž prosím ostatním hru a hrej fair ;-) Šimon R.
+		-->
+	<h1><img src="assets/game-over.png" alt="Konec hry"></h1>
+	<p class="about">Výborně! Děkujeme, že sis zahrál(a) naši hru. Doufáme, že to byla alespoň trošku zábava :-)</p>
+	<p class="about">Tvoje výsledné skóre:</p>
+	<p class="score" id="score"></p>
+	<form class="save-results">
+		<p><input placeholder="Tvé jméno" id="name"></p>
+		<p><button id="save" disabled>Uložit výsledek</button></p>
+	</form>
+	<hr>
+	<p class="about">Nebo můžeš zkusit štěstí znovu a své skóre si vylepšit:</p>
+	<p><a href="game.html"><img src="assets/play.png" alt="Hrát znovu"></a></p>
+	<p class="about">Vytvořili Šimon a Štěpán Rozsívalovi</p>
+	
+	<script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+	<script>
+	window.onload = function() {
+		var score = NaN;
+		var cookies = document.cookie.split(";");
+		for (var cookie in cookies) {
+			if (cookies[cookie].trim().substr(0, 6) === "score=") {
+				var data = cookies[cookie].split("=");
+				score = Number(data[1]);
+				break;
+			}
+		}
+		 
+		if (isNaN(score) === false) {
+			var scoreEl = document.getElementById("score");
+			scoreEl.innerHTML = score + "&nbsp;b";
+		} else {
+			window.location.replace("highscore.html"); // no saved result
+		}
+		
+		var name = "";
+		var input = document.getElementById("name");
+		var btn = document.getElementById("save");
+		
+		function change(e) {
+			name = e.target.value;
+			if (name.length > 0) {
+				btn.removeAttribute("disabled");
+			} else {
+				btn.setAttribute("disabled", "disabled");
+			}
+		};
+
+		input.onkeyup = change;
+		input.onchange = change;
+		
+		
+		btn.onclick = function(e) {
+			e.preventDefault();
+			btn.setAttribute("disabled", "disabled");
+			var firebaseRef = new Firebase("https://skautsky-ples.firebaseio.com/game/highscore");
+			var itemRef = firebaseRef.push();
+			var id = itemRef.key();
+			itemRef.set({
+				name: name,
+				score: score,
+				date: Date.now()
+			}, function(err) {
+				console.log(err);
+				if (!!err) {
+					// error happeded
+					alert("Stala se chyba při ukládání výsledků - zkontrolujte své připojení k Internetu.");
+				} else {
+					// the data is saved
+					window.location.replace("highscore.html?id=" + id);
+				}
+			});
+			return false;
+		};
+	};
+	</script>
+</body>
+</html>

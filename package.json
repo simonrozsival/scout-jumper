@@ -1,0 +1,24 @@
+{
+  "name": "scout-jumper",
+  "version": "1.0.0",
+  "description": "A simple HTML5 game to test Phaser and to be used as an invitation to our local scout ball.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require ts-loader/require"
+  },
+  "author": "Šimon Rozsíval <simon@rozsival.com>",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^2.3.2",
+    "phaser": "^2.4.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.21",
+    "babel-loader": "^6.2.0",
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "ts-loader": "^0.7.2",
+    "typescript": "^1.7.5",
+    "webpack": "^1.12.9"
+  }
+}

@@ -1,0 +1,91 @@
+
+	h1 {
+		text-align: center;
+		margin-bottom: 40px;
+	}	
+	
+	p {
+		text-align: center;
+		font-weight: lighter;
+		font-size: 22px;
+		font-family: sans-serif;
+		color: #111;
+	}
+	
+	p.about {
+		max-width: 50%;
+		margin: 10px auto;
+	}
+	
+	a, a:visited {
+		border: none;
+		text-decoration: none;
+	}
+	
+	.save-results button:disabled {
+		opacity: 0.5;
+		cursor: default;
+	}
+	
+	img {
+		border: none;
+		max-width: 50%;
+		max-height: 250px;
+	}
+	
+	img#logo,
+	img#instructions {
+		max-width: 100%;
+		max-height: initial;
+	}
+	
+	.score {
+		color: #D02453;
+		font-size: 80pt;
+		font-weight: bold;
+		margin: 10px;
+	}
+	
+	.save-results input {
+		width: 50%;
+		text-align: center;
+		font-size: 25pt;
+	}
+	
+	.save-results button {
+		padding: 5px 20px;
+		font-size: 18px;
+		background: #D02453;
+		color: #fff;
+		border: none;
+		border-bottom: 4px solid #D02453;
+		cursor: pointer;
+	}
+	
+	.save-results button:not(:disabled):hover {
+		border-bottom: 4px solid #921A3B;
+	}
+	
+	ol.highscore {
+		width: 40%;
+		font-size: 20pt;
+		font-family: sans-serif;
+		margin: 40px auto;
+	}
+	
+	ol.highscore li {
+		line-height: 24pt;
+	}
+
+	ol.highscore li b {
+		color: #D02453;
+	}
+	
+	hr {
+		display: block;
+		height: 1px;
+		border: none;
+		border-bottom: 1px solid #ddd;
+		width: 30%;
+		text-align: center; 
+	}
