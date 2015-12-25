@@ -4,6 +4,6 @@
 
 ## How to build and run the game
 - install dependencies with `npm install`
-- build the 
+- build the game using `webpack`
 - run any HTTP server, such as [http-server](https://www.npmjs.com/package/http-server) to serve the staic files from the root directory
 - open the URL of the local server in your web browser
