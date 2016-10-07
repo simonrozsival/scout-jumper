@@ -42,7 +42,7 @@ export default class Obstacles {
 		const next: Phaser.Sprite = this.game.add.sprite(this.game.width, 0, asset);
 		this.game.physics.p2.enable(next);
 		next.body.clearShapes();
-		next.body.mass = 10000;
+		next.body.mass = 100;
 		next.body.loadPolygon("collision-shapes", asset);
 		next.body.x = this.gameWidth + next.width + 200;
 		next.body.y = 0;

@@ -81,15 +81,15 @@ export class ScoutGame {
 		const groundGroup = this.game.physics.p2.createCollisionGroup();
 		const obstaclesGroup = this.game.physics.p2.createCollisionGroup();
 		const extrasGroup = this.game.physics.p2.createCollisionGroup();
-		this.player.setColllisionGroup(playerGroup, [ platformGroup, obstaclesGroup, extrasGroup ]);
+		this.player.setColllisionGroup(playerGroup, [ groundGroup, obstaclesGroup, extrasGroup ]);
 		this.player.Sprite.body.onBeginContact.add((body) => {
 			if (Extras.types.indexOf(body.sprite.key) >= 0) {
 				this.score.addScore(this.extras.take(body));
 			}
 		}, this); // take the extra!!
 		this.obstacles.setColllisionGroup(obstaclesGroup, [ playerGroup, groundGroup, extrasGroup ]);
-		this.background.setMovingColllisionGroup(groundGroup, [ obstaclesGroup, extrasGroup ]);
-		this.background.setStillColllisionGroup(platformGroup, [ playerGroup ]);
+		this.background.setMovingColllisionGroup(groundGroup, [ playerGroup, obstaclesGroup, extrasGroup ]);
+		//this.background.setStillColllisionGroup(platformGroup, [ playerGroup ]);
 		this.extras.setColllisionGroup(extrasGroup, [ groundGroup, obstaclesGroup, playerGroup ]);
 
 		// start increasing the speed

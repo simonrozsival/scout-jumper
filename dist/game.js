@@ -100,15 +100,15 @@
 	            var groundGroup = _this.game.physics.p2.createCollisionGroup();
 	            var obstaclesGroup = _this.game.physics.p2.createCollisionGroup();
 	            var extrasGroup = _this.game.physics.p2.createCollisionGroup();
-	            _this.player.setColllisionGroup(playerGroup, [platformGroup, obstaclesGroup, extrasGroup]);
+	            _this.player.setColllisionGroup(playerGroup, [groundGroup, obstaclesGroup, extrasGroup]);
 	            _this.player.Sprite.body.onBeginContact.add(function (body) {
 	                if (extras_1.default.types.indexOf(body.sprite.key) >= 0) {
 	                    _this.score.addScore(_this.extras.take(body));
 	                }
 	            }, _this); // take the extra!!
 	            _this.obstacles.setColllisionGroup(obstaclesGroup, [playerGroup, groundGroup, extrasGroup]);
-	            _this.background.setMovingColllisionGroup(groundGroup, [obstaclesGroup, extrasGroup]);
-	            _this.background.setStillColllisionGroup(platformGroup, [playerGroup]);
+	            _this.background.setMovingColllisionGroup(groundGroup, [playerGroup, obstaclesGroup, extrasGroup]);
+	            //this.background.setStillColllisionGroup(platformGroup, [ playerGroup ]);
 	            _this.extras.setColllisionGroup(extrasGroup, [groundGroup, obstaclesGroup, playerGroup]);
 	            // start increasing the speed
 	            setTimeout(_this.changeSpeed, 5000);
@@ -391,7 +391,7 @@
 	        this.jump = function () {
 	            _this.sprite.animations.play("jump");
 	            _this.sprite.body.velocity.y = -720;
-	            _this.sprite.body.velocity.x = 50;
+	            _this.sprite.body.velocity.x = 30;
 	            _this.isInAir = true;
 	            _this.hopSound.play();
 	        };
@@ -504,7 +504,7 @@
 	            var next = _this.game.add.sprite(_this.game.width, 0, asset);
 	            _this.game.physics.p2.enable(next);
 	            next.body.clearShapes();
-	            next.body.mass = 10000;
+	            next.body.mass = 100;
 	            next.body.loadPolygon("collision-shapes", asset);
 	            next.body.x = _this.gameWidth + next.width + 200;
 	            next.body.y = 0;
